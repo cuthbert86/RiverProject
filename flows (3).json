@@ -1,0 +1,1249 @@
+[
+    {
+        "id": "38240a5a23fafee4",
+        "type": "tab",
+        "label": "Flow 2",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "d7cb8e8311cf984f",
+        "type": "mqtt in",
+        "z": "38240a5a23fafee4",
+        "name": "",
+        "topic": "test_data",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "178a50aa1245cf00",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 60,
+        "y": 280,
+        "wires": [
+            [
+                "4e60c868b2c4e276",
+                "e899735a364ead68",
+                "827b15d05456ff78",
+                "62ac28cef0fb7388"
+            ]
+        ]
+    },
+    {
+        "id": "4e60c868b2c4e276",
+        "type": "json",
+        "z": "38240a5a23fafee4",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": true,
+        "x": 230,
+        "y": 180,
+        "wires": [
+            [
+                "0b893f145ecc80a6",
+                "98934c617ec031ca",
+                "eb04bd32b445be58",
+                "825df2569933dce7",
+                "99b1eb12ef24eabb",
+                "6186111f1db84628"
+            ]
+        ]
+    },
+    {
+        "id": "0b893f145ecc80a6",
+        "type": "debug",
+        "z": "38240a5a23fafee4",
+        "name": "debug 6",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 360,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "e899735a364ead68",
+        "type": "debug",
+        "z": "38240a5a23fafee4",
+        "name": "debug 7",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 280,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "67287e4beba8ae5e",
+        "type": "ui_chart",
+        "z": "38240a5a23fafee4",
+        "name": "",
+        "group": "2fc1ce28a58b1ce7",
+        "order": 10,
+        "width": 8,
+        "height": 6,
+        "label": "chart",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "auto",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "50",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 870,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "98934c617ec031ca",
+        "type": "function",
+        "z": "38240a5a23fafee4",
+        "name": "function 8",
+        "func": "// Access data directly from msg.payload (assuming it's an object)\nlet temperatureValue = parseFloat(msg.payload.temp);\n// Handle potential errors:\nif (isNaN(temperatureValue)) {\n  temperatureValue = 0; // Or handle the error differently\n}\n\nlet dissolvedOxygenValue = parseFloat(msg.payload.DO);\nif (isNaN(dissolvedOxygenValue)) {\n  dissolvedOxygenValue = 0; // Or handle the error differently\n}\n\n// Construct separate messages for each data point\nconst temperatureMessage = {\n  topic: \"Temperature\", // More descriptive topic name\n  payload: temperatureValue\n};\n\n// Return both messages in an array\nreturn [temperatureMessage];",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 120,
+        "wires": [
+            [
+                "67287e4beba8ae5e",
+                "069b176dd23b0419"
+            ]
+        ]
+    },
+    {
+        "id": "069b176dd23b0419",
+        "type": "debug",
+        "z": "38240a5a23fafee4",
+        "name": "debug 8",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 580,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "eb04bd32b445be58",
+        "type": "function",
+        "z": "38240a5a23fafee4",
+        "name": "function 9",
+        "func": "// Access data directly from msg.payload (assuming it's an object)\nlet temperatureValue = parseFloat(msg.payload.temp);\n// Handle potential errors:\n  if (isNaN(temperatureValue)) {\n  temperatureValue = 0; // Or handle the error differently\n}\n\nlet Humidityvalue = parseFloat(msg.payload.Humidity);\n  if (isNaN(Humidityvalue)) {\n  Humidityvalue = 0; // Or handle the error differently\n}\n\n\n// Construct separate messages for each data point\nconst Humiditymessage = {\n  topic: \"Humidity\", // More descriptive topic name\n  payload: Humidityvalue\n};\n\n// Return both messages in an array\nreturn [Humiditymessage];",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 160,
+        "wires": [
+            [
+                "919f8d3e743fed46",
+                "3ab5c0f6871d7a58"
+            ]
+        ]
+    },
+    {
+        "id": "919f8d3e743fed46",
+        "type": "ui_chart",
+        "z": "38240a5a23fafee4",
+        "name": "",
+        "group": "2fc1ce28a58b1ce7",
+        "order": 11,
+        "width": 7,
+        "height": 6,
+        "label": "",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "auto",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 870,
+        "y": 160,
+        "wires": [
+            [
+                "64b67bf5093a084b"
+            ]
+        ]
+    },
+    {
+        "id": "1ebfc4ad28a3254d",
+        "type": "file",
+        "z": "38240a5a23fafee4",
+        "name": "",
+        "filename": "/home/cuthbert/Desktop/node-red testing folder/file2.csv",
+        "filenameType": "str",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "false",
+        "encoding": "setbymsg",
+        "x": 710,
+        "y": 320,
+        "wires": [
+            [
+                "df611c8eb7f3e27c"
+            ]
+        ]
+    },
+    {
+        "id": "df611c8eb7f3e27c",
+        "type": "debug",
+        "z": "38240a5a23fafee4",
+        "name": "debug 9",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1020,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "827b15d05456ff78",
+        "type": "json",
+        "z": "38240a5a23fafee4",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": true,
+        "x": 270,
+        "y": 360,
+        "wires": [
+            [
+                "1d68c244c5d29ab2",
+                "f92aba8b25d2b0cc"
+            ]
+        ]
+    },
+    {
+        "id": "1d68c244c5d29ab2",
+        "type": "csv",
+        "z": "38240a5a23fafee4",
+        "name": "",
+        "sep": ",",
+        "hdrin": false,
+        "hdrout": "none",
+        "multi": "one",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": false,
+        "x": 410,
+        "y": 320,
+        "wires": [
+            [
+                "1ebfc4ad28a3254d"
+            ]
+        ]
+    },
+    {
+        "id": "fe1899dff42f5827",
+        "type": "template",
+        "z": "38240a5a23fafee4",
+        "d": true,
+        "name": "GoCuthbert",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Embedded Node-RED Dashboard</title>\n</head>\n<body>\n    <h1>Welcome to My Embedded Node-RED Dashboard</h1>\n    <p>This is my custom HTML page with Node-RED dashboard embedded.</p>\n\n    <!-- Replace the src attribute value with your Node-RED dashboard URL -->\n    <iframe src=\"http://localhost:1880/ui/#!/0?socketid=7u6ynCNLtwS_AqPwAAAx#%2F73393adb9ca26544\" width=\"800\" height=\"600\" frameborder=\"0\"></iframe>\n</body>\n</html>",
+        "output": "str",
+        "x": 510,
+        "y": 500,
+        "wires": [
+            [
+                "c7f8c6415d8210fa"
+            ]
+        ]
+    },
+    {
+        "id": "f92aba8b25d2b0cc",
+        "type": "debug",
+        "z": "38240a5a23fafee4",
+        "name": "debug 10",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 420,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "af0487faf2542ebf",
+        "type": "http in",
+        "z": "38240a5a23fafee4",
+        "d": true,
+        "name": "Host-Get",
+        "url": "/GOCuthbert",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 280,
+        "y": 480,
+        "wires": [
+            [
+                "fe1899dff42f5827"
+            ]
+        ]
+    },
+    {
+        "id": "c7f8c6415d8210fa",
+        "type": "http response",
+        "z": "38240a5a23fafee4",
+        "d": true,
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 810,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "26c00011492bb678",
+        "type": "ui_text",
+        "z": "38240a5a23fafee4",
+        "d": true,
+        "group": "2fc1ce28a58b1ce7",
+        "order": 1,
+        "width": 15,
+        "height": 1,
+        "name": "",
+        "label": "Pi Data",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": true,
+        "font": "Arial,Arial,Helvetica,sans-serif",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 760,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "7c1a41c170536034",
+        "type": "python-function",
+        "z": "38240a5a23fafee4",
+        "d": true,
+        "name": "",
+        "func": "import json\nimport time\n# Initialize variable to store the highest value\nhighest_value = float('-inf')  # Initialize with negative infinity to handle negative values\n\nwhile True:\n    # Simulate receiving data from JSON (replace this with actual data source)\n    json_data = '{\n    \"temp\": \"35.35007095336914\",\n    \"DO\": \"35.35007095336914\",\n    \"Date\": \"2024-02-21 10:19:46.519137\"\n}'  \n# Example JSON data, replace with your data source\n    \n    # Parse JSON data\n    data = json.loads(json_data)\n    \n    # Extract the value from JSON data\n    value = data.get('temp')\n    \n    # Check if value is valid and update highest value if needed\n    if value is not None:\n        highest_value = max(highest_value, value)\n        print(\"Current highest value:\", highest_value)\n    else:\n        print(\"Invalid value received from JSON\")\n\n    # Add a delay to simulate continuous data reception (replace with your actual data reception mechanism)\n    # For example, if you're receiving data asynchronously, you may not need this delay.\n\ntime.sleep(1)  # Sleep for 1 second\nreturn msg",
+        "outputs": 1,
+        "x": 440,
+        "y": 400,
+        "wires": [
+            [
+                "44e8005434d5b062"
+            ]
+        ]
+    },
+    {
+        "id": "44e8005434d5b062",
+        "type": "debug",
+        "z": "38240a5a23fafee4",
+        "d": true,
+        "name": "debug 12",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1040,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "62ac28cef0fb7388",
+        "type": "json",
+        "z": "38240a5a23fafee4",
+        "d": true,
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": true,
+        "x": 270,
+        "y": 400,
+        "wires": [
+            [
+                "7c1a41c170536034",
+                "819efc2fae91f999"
+            ]
+        ]
+    },
+    {
+        "id": "819efc2fae91f999",
+        "type": "debug",
+        "z": "38240a5a23fafee4",
+        "d": true,
+        "name": "debug 13",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 440,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "825df2569933dce7",
+        "type": "function",
+        "z": "38240a5a23fafee4",
+        "name": "function 10",
+        "func": "// Access data directly from msg.payload (assuming it's an object)\nlet temperatureValue = parseFloat(msg.payload.temp);\n// Handle potential errors:\nif (isNaN(temperatureValue)) {\n  temperatureValue = 0; // Or handle the error differently\n}\n\nlet dissolvedOxygenValue = parseFloat(msg.payload.DO);\nif (isNaN(dissolvedOxygenValue)) {\n  dissolvedOxygenValue = 0; // Or handle the error differently\n}\n\n// Access data directly from msg.payload (assuming it's an object)\nlet rollingAve = parseFloat(msg.payload.Ave1);\n// Handle potential errors:\nif (isNaN(rollingAve)) {\n  rollingAve = 0; // Or handle the error differently\n}\n\n\n// Construct separate messages for each data point\nconst aveMessage = {\n  topic: \"Average\", // More descriptive topic name\n  payload: rollingAve\n};\n\n// Return both messages in an array\nreturn [aveMessage];\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 410,
+        "y": 200,
+        "wires": [
+            [
+                "1e8c99fa575e3619"
+            ]
+        ]
+    },
+    {
+        "id": "1e8c99fa575e3619",
+        "type": "ui_gauge",
+        "z": "38240a5a23fafee4",
+        "name": "Ave1",
+        "group": "2fc1ce28a58b1ce7",
+        "order": 3,
+        "width": 5,
+        "height": 4,
+        "gtype": "gage",
+        "title": "Rolling Average of previous 120 data points",
+        "label": "units",
+        "format": "{{value}}",
+        "min": "30",
+        "max": "40",
+        "colors": [
+            "#ffc800",
+            "#00e626",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 870,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "99b1eb12ef24eabb",
+        "type": "function",
+        "z": "38240a5a23fafee4",
+        "name": "function 11",
+        "func": "// Access data directly from msg.payload (assuming it's an object)\nlet temperatureValue = parseFloat(msg.payload.temp);\n// Handle potential errors:\nif (isNaN(temperatureValue)) {\n  temperatureValue = 0; // Or handle the error differently\n}\n\nlet dissolvedOxygenValue = parseFloat(msg.payload.DO);\nif (isNaN(dissolvedOxygenValue)) {\n  dissolvedOxygenValue = 0; // Or handle the error differently\n}\n\nlet Ave1 = parseFloat(msg.payload.Ave1);\nif (isNaN(Ave1)) {\n  Ave1 = 0; // Or handle the error differently\n}\n\n// Access data directly from msg.payload (assuming it's an object)\nlet AveWeek = parseFloat(msg.payload.AveWeek);\n// Handle potential errors:\nif (isNaN(AveWeek)) {\n  AveWeek = 0; // Or handle the error differently\n}\n\n\n// Construct separate messages for each data point\nconst aveMessage = {\n  topic: \"Average\", // More descriptive topic name\n  payload: AveWeek\n};\n\n// Return both messages in an array\nreturn [aveMessage];",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 410,
+        "y": 240,
+        "wires": [
+            [
+                "d8f6617ce5cc0b17"
+            ]
+        ]
+    },
+    {
+        "id": "6186111f1db84628",
+        "type": "function",
+        "z": "38240a5a23fafee4",
+        "name": "function 12",
+        "func": "// Access data directly from msg.payload (assuming it's an object)\nlet temperatureValue = parseFloat(msg.payload.temp);\n// Handle potential errors:\nif (isNaN(temperatureValue)) {\n  temperatureValue = 0; // Or handle the error differently\n}\n\nlet DO = parseFloat(msg.payload.DO);\nif (isNaN(DO)) {\n  DO = 0; // Or handle the error differently\n}\n\nlet Ave1 = parseFloat(msg.payload.Ave1);\nif (isNaN(Ave1)) {\n  Ave1 = 0; // Or handle the error differently\n}\n\n// Access data directly from msg.payload (assuming it's an object)\nlet AveWeek = parseFloat(msg.payload.AveWeek);\n// Handle potential errors:\nif (isNaN(AveWeek)) {\n  AveWeek = 0; // Or handle the error differently\n}\n\n// Access data directly from msg.payload (assuming it's an object)\nlet AveMonth = parseFloat(msg.payload.AveMonth);\n// Handle potential errors:\nif (isNaN(AveMonth)) {\n  AveMonth = 0; // Or handle the error differently\n}\n\n\n// Construct separate messages for each data point\nconst aveMessage = {\n  topic: \"Average\", // More descriptive topic name\n  payload: AveMonth\n};\n\n// Return both messages in an array\nreturn [aveMessage];",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 410,
+        "y": 280,
+        "wires": [
+            [
+                "c973cca490dff1b9"
+            ]
+        ]
+    },
+    {
+        "id": "d8f6617ce5cc0b17",
+        "type": "ui_gauge",
+        "z": "38240a5a23fafee4",
+        "name": "Last Weeks Average",
+        "group": "2fc1ce28a58b1ce7",
+        "order": 4,
+        "width": 5,
+        "height": 4,
+        "gtype": "gage",
+        "title": "Rolling Average of the previous 840 data points",
+        "label": "units",
+        "format": "{{value}}",
+        "min": "30",
+        "max": "40",
+        "colors": [
+            "#ffdd00",
+            "#00ff2a",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 920,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "c973cca490dff1b9",
+        "type": "ui_gauge",
+        "z": "38240a5a23fafee4",
+        "name": "Average of Last Month",
+        "group": "2fc1ce28a58b1ce7",
+        "order": 5,
+        "width": 5,
+        "height": 4,
+        "gtype": "gage",
+        "title": "Rolling average of 3360 data points",
+        "label": "units",
+        "format": "{{value}}",
+        "min": "30",
+        "max": "40",
+        "colors": [
+            "#f9aa01",
+            "#00ff04",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 920,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "33dc28e597a9a038",
+        "type": "inject",
+        "z": "38240a5a23fafee4",
+        "d": true,
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "1",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 130,
+        "y": 580,
+        "wires": [
+            [
+                "8a649d8609d7e78e"
+            ]
+        ]
+    },
+    {
+        "id": "8a649d8609d7e78e",
+        "type": "ui_template",
+        "z": "38240a5a23fafee4",
+        "d": true,
+        "group": "a5d3a21adf49b4af",
+        "name": "",
+        "order": 29,
+        "width": 0,
+        "height": 0,
+        "format": "<div ng-bind-html=\"msg.payload\">The Guages at the top show the rolling averages of the most recent Temperature readings</div>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 440,
+        "y": 580,
+        "wires": [
+            [
+                "26c00011492bb678"
+            ]
+        ]
+    },
+    {
+        "id": "2a9429dab4e4700e",
+        "type": "ui_worldmap",
+        "z": "38240a5a23fafee4",
+        "group": "2fc1ce28a58b1ce7",
+        "order": 18,
+        "width": 15,
+        "height": 9,
+        "name": "",
+        "lat": "",
+        "lon": "",
+        "zoom": "",
+        "layer": "UKOS",
+        "cluster": "",
+        "maxage": "",
+        "usermenu": "hide",
+        "layers": "hide",
+        "panit": "false",
+        "panlock": "false",
+        "zoomlock": "false",
+        "hiderightclick": "true",
+        "coords": "none",
+        "showgrid": "false",
+        "showruler": "false",
+        "allowFileDrop": "false",
+        "path": "/worldmap",
+        "overlist": "DR,CO,RA,DN",
+        "maplist": "UKOS",
+        "mapname": "",
+        "mapurl": "",
+        "mapopt": "",
+        "mapwms": false,
+        "x": 520,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "3fd17778688f7392",
+        "type": "inject",
+        "z": "38240a5a23fafee4",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"name\":\"My Marker\",\"lat\":53.3303,\"lon\":-1.65398}",
+        "payloadType": "json",
+        "x": 270,
+        "y": 680,
+        "wires": [
+            [
+                "2a9429dab4e4700e"
+            ]
+        ]
+    },
+    {
+        "id": "3ab5c0f6871d7a58",
+        "type": "debug",
+        "z": "38240a5a23fafee4",
+        "name": "debug 14",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 860,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "64b67bf5093a084b",
+        "type": "debug",
+        "z": "38240a5a23fafee4",
+        "name": "debug 15",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1060,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "adba1fd88fc892b4",
+        "type": "ui_spacer",
+        "z": "38240a5a23fafee4",
+        "name": "spacer",
+        "group": "a5d3a21adf49b4af",
+        "order": 2,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "d49cdaa230155415",
+        "type": "ui_spacer",
+        "z": "38240a5a23fafee4",
+        "name": "spacer",
+        "group": "a5d3a21adf49b4af",
+        "order": 3,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "e61adb79ebfece5f",
+        "type": "ui_spacer",
+        "z": "38240a5a23fafee4",
+        "name": "spacer",
+        "group": "a5d3a21adf49b4af",
+        "order": 4,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "30f2a352dfa3dfee",
+        "type": "ui_spacer",
+        "z": "38240a5a23fafee4",
+        "name": "spacer",
+        "group": "a5d3a21adf49b4af",
+        "order": 5,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "4b6e5cbab8153583",
+        "type": "ui_spacer",
+        "z": "38240a5a23fafee4",
+        "name": "spacer",
+        "group": "a5d3a21adf49b4af",
+        "order": 7,
+        "width": 4,
+        "height": 1
+    },
+    {
+        "id": "1183ef4b7322e90d",
+        "type": "ui_spacer",
+        "z": "38240a5a23fafee4",
+        "name": "spacer",
+        "group": "a5d3a21adf49b4af",
+        "order": 8,
+        "width": 4,
+        "height": 1
+    },
+    {
+        "id": "eab8d1500de32f11",
+        "type": "ui_spacer",
+        "z": "38240a5a23fafee4",
+        "name": "spacer",
+        "group": "a5d3a21adf49b4af",
+        "order": 9,
+        "width": 4,
+        "height": 1
+    },
+    {
+        "id": "1aa5985445dcdba3",
+        "type": "ui_spacer",
+        "z": "38240a5a23fafee4",
+        "name": "spacer",
+        "group": "a5d3a21adf49b4af",
+        "order": 10,
+        "width": 4,
+        "height": 1
+    },
+    {
+        "id": "6be1fe120eb9a6f5",
+        "type": "ui_spacer",
+        "z": "38240a5a23fafee4",
+        "name": "spacer",
+        "group": "a5d3a21adf49b4af",
+        "order": 12,
+        "width": 6,
+        "height": 1
+    },
+    {
+        "id": "2f7ba71544a4aa0d",
+        "type": "ui_spacer",
+        "z": "38240a5a23fafee4",
+        "name": "spacer",
+        "group": "a5d3a21adf49b4af",
+        "order": 13,
+        "width": 6,
+        "height": 1
+    },
+    {
+        "id": "e66bb8ab3ed8fd10",
+        "type": "ui_spacer",
+        "z": "38240a5a23fafee4",
+        "name": "spacer",
+        "group": "a5d3a21adf49b4af",
+        "order": 14,
+        "width": 6,
+        "height": 1
+    },
+    {
+        "id": "43160c09e0ecbab6",
+        "type": "ui_spacer",
+        "z": "38240a5a23fafee4",
+        "name": "spacer",
+        "group": "a5d3a21adf49b4af",
+        "order": 15,
+        "width": 6,
+        "height": 1
+    },
+    {
+        "id": "8d79b66320627048",
+        "type": "ui_spacer",
+        "z": "38240a5a23fafee4",
+        "name": "spacer",
+        "group": "a5d3a21adf49b4af",
+        "order": 16,
+        "width": 6,
+        "height": 1
+    },
+    {
+        "id": "3bddb8fac73621a2",
+        "type": "ui_spacer",
+        "z": "38240a5a23fafee4",
+        "name": "spacer",
+        "group": "a5d3a21adf49b4af",
+        "order": 18,
+        "width": 3,
+        "height": 1
+    },
+    {
+        "id": "337f4d08d42bec63",
+        "type": "ui_spacer",
+        "z": "38240a5a23fafee4",
+        "name": "spacer",
+        "group": "a5d3a21adf49b4af",
+        "order": 19,
+        "width": 3,
+        "height": 1
+    },
+    {
+        "id": "f1c2fec164c3dc64",
+        "type": "ui_spacer",
+        "z": "38240a5a23fafee4",
+        "name": "spacer",
+        "group": "a5d3a21adf49b4af",
+        "order": 20,
+        "width": 3,
+        "height": 1
+    },
+    {
+        "id": "44f4fd298677019c",
+        "type": "ui_spacer",
+        "z": "38240a5a23fafee4",
+        "name": "spacer",
+        "group": "a5d3a21adf49b4af",
+        "order": 21,
+        "width": 3,
+        "height": 1
+    },
+    {
+        "id": "108008ab4d9de4f5",
+        "type": "ui_spacer",
+        "z": "38240a5a23fafee4",
+        "name": "spacer",
+        "group": "a5d3a21adf49b4af",
+        "order": 22,
+        "width": 3,
+        "height": 1
+    },
+    {
+        "id": "6b21da570a76cea4",
+        "type": "ui_spacer",
+        "z": "38240a5a23fafee4",
+        "name": "spacer",
+        "group": "a5d3a21adf49b4af",
+        "order": 23,
+        "width": 3,
+        "height": 1
+    },
+    {
+        "id": "de502c0fde8ef01f",
+        "type": "ui_spacer",
+        "z": "38240a5a23fafee4",
+        "name": "spacer",
+        "group": "a5d3a21adf49b4af",
+        "order": 24,
+        "width": 3,
+        "height": 1
+    },
+    {
+        "id": "2ddd30410a447825",
+        "type": "ui_spacer",
+        "z": "38240a5a23fafee4",
+        "name": "spacer",
+        "group": "a5d3a21adf49b4af",
+        "order": 26,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "abe7194d3b2824c4",
+        "type": "ui_spacer",
+        "z": "38240a5a23fafee4",
+        "name": "spacer",
+        "group": "a5d3a21adf49b4af",
+        "order": 27,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "4e2d37c3aab4086a",
+        "type": "ui_spacer",
+        "z": "38240a5a23fafee4",
+        "name": "spacer",
+        "group": "a5d3a21adf49b4af",
+        "order": 28,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "4b2007fb87a9a6ae",
+        "type": "ui_spacer",
+        "z": "38240a5a23fafee4",
+        "name": "spacer",
+        "group": "2fc1ce28a58b1ce7",
+        "order": 2,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "7980da23b74a0693",
+        "type": "ui_spacer",
+        "z": "38240a5a23fafee4",
+        "name": "spacer",
+        "group": "2fc1ce28a58b1ce7",
+        "order": 6,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "a0a9435077d418ca",
+        "type": "ui_spacer",
+        "z": "38240a5a23fafee4",
+        "name": "spacer",
+        "group": "2fc1ce28a58b1ce7",
+        "order": 7,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "effb9c6dd67c1a52",
+        "type": "ui_spacer",
+        "z": "38240a5a23fafee4",
+        "name": "spacer",
+        "group": "2fc1ce28a58b1ce7",
+        "order": 8,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "837efebe5f39608f",
+        "type": "ui_spacer",
+        "z": "38240a5a23fafee4",
+        "name": "spacer",
+        "group": "2fc1ce28a58b1ce7",
+        "order": 9,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "ecde5e6c2fe7b29d",
+        "type": "ui_spacer",
+        "z": "38240a5a23fafee4",
+        "name": "spacer",
+        "group": "2fc1ce28a58b1ce7",
+        "order": 12,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "c17523cdd256dbdf",
+        "type": "ui_spacer",
+        "z": "38240a5a23fafee4",
+        "name": "spacer",
+        "group": "2fc1ce28a58b1ce7",
+        "order": 13,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "dcabd4dfd302db39",
+        "type": "ui_spacer",
+        "z": "38240a5a23fafee4",
+        "name": "spacer",
+        "group": "2fc1ce28a58b1ce7",
+        "order": 14,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "6c9a1a29c3992f23",
+        "type": "ui_spacer",
+        "z": "38240a5a23fafee4",
+        "name": "spacer",
+        "group": "2fc1ce28a58b1ce7",
+        "order": 15,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "1c5447aec7d87003",
+        "type": "ui_spacer",
+        "z": "38240a5a23fafee4",
+        "name": "spacer",
+        "group": "2fc1ce28a58b1ce7",
+        "order": 16,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "669491bac5121fc3",
+        "type": "ui_spacer",
+        "z": "38240a5a23fafee4",
+        "name": "spacer",
+        "group": "2fc1ce28a58b1ce7",
+        "order": 17,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "122f09d027f6af1a",
+        "type": "ui_spacer",
+        "z": "38240a5a23fafee4",
+        "name": "spacer",
+        "group": "2fc1ce28a58b1ce7",
+        "order": 19,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "f89f292ea8b44777",
+        "type": "ui_spacer",
+        "z": "38240a5a23fafee4",
+        "name": "spacer",
+        "group": "2fc1ce28a58b1ce7",
+        "order": 20,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "e3377e663f2003d0",
+        "type": "ui_spacer",
+        "z": "38240a5a23fafee4",
+        "name": "spacer",
+        "group": "2fc1ce28a58b1ce7",
+        "order": 21,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "bbc335f63525093b",
+        "type": "ui_spacer",
+        "z": "38240a5a23fafee4",
+        "name": "spacer",
+        "group": "2fc1ce28a58b1ce7",
+        "order": 22,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "c7abb1a06227d4e0",
+        "type": "ui_spacer",
+        "z": "38240a5a23fafee4",
+        "name": "spacer",
+        "group": "2fc1ce28a58b1ce7",
+        "order": 23,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "925a744659f3ac77",
+        "type": "ui_spacer",
+        "z": "38240a5a23fafee4",
+        "name": "spacer",
+        "group": "2fc1ce28a58b1ce7",
+        "order": 24,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "c6b47911bbe7b0fb",
+        "type": "ui_spacer",
+        "z": "38240a5a23fafee4",
+        "name": "spacer",
+        "group": "2fc1ce28a58b1ce7",
+        "order": 25,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "36321fd96e6a6e9a",
+        "type": "ui_spacer",
+        "z": "38240a5a23fafee4",
+        "name": "spacer",
+        "group": "2fc1ce28a58b1ce7",
+        "order": 26,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "21e5d22859026775",
+        "type": "ui_spacer",
+        "z": "38240a5a23fafee4",
+        "name": "spacer",
+        "group": "2fc1ce28a58b1ce7",
+        "order": 27,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "178a50aa1245cf00",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "2fc1ce28a58b1ce7",
+        "type": "ui_group",
+        "name": "river2",
+        "tab": "a58e6387f04561da",
+        "order": 2,
+        "disp": true,
+        "width": 17,
+        "collapse": true,
+        "className": ""
+    },
+    {
+        "id": "a5d3a21adf49b4af",
+        "type": "ui_group",
+        "d": true,
+        "name": "River",
+        "tab": "a58e6387f04561da",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": true,
+        "className": ""
+    },
+    {
+        "id": "a58e6387f04561da",
+        "type": "ui_tab",
+        "name": "River",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]
