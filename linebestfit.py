@@ -16,23 +16,23 @@ def calculate_rolling_averagemean(newdf):
     total = sum(newdf)
     num1 = 9457
     aveMean = total / num1
-#   ave1 = mean([data_window])
+#   ave1 = mean([data_window])cuthbert/Desktop/node-red testing folder/
     print(aveMean)
     return aveMean
 
 
 # data_window.append(df())
 
-newdf = df.Temperature
-print(newdf)
-
-calculate_rolling_averagemean(newdf)
-newdfave = calculate_rolling_averagemean(newdf)
-df2 = df.PercentDO
-calculate_rolling_averagemean(df2)
-df2 = calculate_rolling_averagemean(df2)
-
-bestfit = df2 - newdfave
-line = bestfit / 2
-print(bestfit)
-print(line)
+dftemp = df.Temperature
+print(dftemp)
+dfDO = df.PercentDO
+print(dfDO)
+avetemp = calculate_rolling_averagemean(dftemp)
+print("average temperature = ", avetemp)
+aveDOpercent = calculate_rolling_averagemean(dfDO)
+print("average DO percentage = ", aveDOpercent)
+bestfit = aveDOpercent - avetemp
+line = (bestfit / 2) + avetemp
+print("best fit =", line)
+coefficent = aveDOpercent / avetemp
+print("coefficient = ", coefficent)
