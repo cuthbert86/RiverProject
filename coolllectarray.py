@@ -5,9 +5,9 @@ from sense_hat import SenseHat
 from datetime import datetime
 from collections import deque
 # from array import *
-# import numpy as np
-# import pandas
-
+import numpy as np
+import pandas
+import sqlite3
 # from statistics import mean
 
 
@@ -23,12 +23,19 @@ port = 1883                 # Default MQTT port
 temp1 = float()
 # Create an MQTT client instance
 client = mqtt.Client("csv_publisher")
-
+conn = sqlite3.connect('sensor_data.db')
+cursor = conn.cursor()
+cursor.execute('''CREATE TABLE IF NOT EXISTS sensor_data
+                  (id INTEGER PRIMARY KEY AUTOINCREMENT,
+                   temperature REAL,
+                   humidity REAL,
+                   pressure REAL,
+                   timestamp TEXT)''')
 # Connect to the MQTT broker
 client.connect(broker_address, port)
-
+cursor = conn.cursor()
 # Define the topic to which you want to publish
-topic = "test_data"
+topic = "data1"
 
 start_time = time.time()
 duration = 400
@@ -53,11 +60,25 @@ while (time.time() - start_time) < duration:
              "Date": str(datetime.now()),
              "Ave1": str(calculate_rolling_averagemean(data_window)),
              "AveWeek": str(calculate_rolling_averagemean(data_week)),
-             "AveMonth": str(calculate_rolling_averagemean(data_month))}
+             "AveMonth": str(calculate_rolling_averagemean(data_month)),
+             }
+    # Collect sensor data
+    temperature = sense.get_temperature()
+    humidity = sense.get_humidity()
+    pressure = sense.get_pressure()
+    timestamp = datetime.now().isoformat()
 
+    # Insert data into the table
+    cursor.execute('''INSERT INTO sensor_data (temperature, humidity, pressure, timestamp)
+                      VALUES (?, ?, ?, ?)''', (temperature, humidity, pressure, timestamp))
+
+    # Commit changes to the database
+    conn.commit()
+
+    print("Saved sensor data:", temperature, humidity, pressure, timestamp)
 
 # Convert dictionary to JSON string
-    message = json.dumpcoolllectarray.pys(data1)
+    message = json.dumps(data1)
     ave2 = calculate_rolling_averagemean(data_week)
 # print(ave2)
     ave3 = calculate_rolling_averagemean(data_month)
