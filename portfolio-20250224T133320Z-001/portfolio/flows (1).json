@@ -1,0 +1,723 @@
+[
+    {
+        "id": "bc27ebb3355b6132",
+        "type": "tab",
+        "label": "Flow 2",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "e512ab2fcc9f9eb8",
+        "type": "mqtt in",
+        "z": "bc27ebb3355b6132",
+        "name": "cuthbert",
+        "topic": "test_data",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "178a50aa1245cf00",
+        "nl": false,
+        "rap": false,
+        "rh": "0",
+        "inputs": 0,
+        "x": 60,
+        "y": 280,
+        "wires": [
+            [
+                "61c6b568b2a54406",
+                "181c1021061ae7a9",
+                "215294df0ae6612f",
+                "840c0c9d0d9e3d2d"
+            ]
+        ]
+    },
+    {
+        "id": "61c6b568b2a54406",
+        "type": "json",
+        "z": "bc27ebb3355b6132",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": true,
+        "x": 230,
+        "y": 180,
+        "wires": [
+            [
+                "00feabd2aa4c6daf",
+                "1b950c87c43de889",
+                "932c506a8d605a71",
+                "f63115a4ec8876af",
+                "86d85c6908169bc4",
+                "ec5c83c31a26be15"
+            ]
+        ]
+    },
+    {
+        "id": "840c0c9d0d9e3d2d",
+        "type": "debug",
+        "z": "bc27ebb3355b6132",
+        "name": "debug 6",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 360,
+        "y": 20,
+        "wires": []
+    },
+    {
+        "id": "00feabd2aa4c6daf",
+        "type": "function",
+        "z": "bc27ebb3355b6132",
+        "name": "function 8",
+        "func": "// Access data directly from msg.payload (assuming it's an object)\nlet temperatureValue = parseFloat(msg.payload.temp);\n// Handle potential errors:\nif (isNaN(temperatureValue)) {\n  temperatureValue = 0; // Or handle the error differently\n}\n\nlet dissolvedOxygenValue = parseFloat(msg.payload.DO);\nif (isNaN(dissolvedOxygenValue)) {\n  dissolvedOxygenValue = 0; // Or handle the error differently\n}\n\n// Construct separate messages for each data point\nconst temperatureMessage = {\n  topic: \"Temperature\", // More descriptive topic name\n  payload: temperatureValue\n};\n\n// Return both messages in an array\nreturn [temperatureMessage];",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 120,
+        "wires": [
+            [
+                "3a4d2e9c5c6d5201"
+            ]
+        ]
+    },
+    {
+        "id": "1b950c87c43de889",
+        "type": "function",
+        "z": "bc27ebb3355b6132",
+        "name": "function 9",
+        "func": "// Access data directly from msg.payload (assuming it's an object)\nlet temperatureValue = parseFloat(msg.payload.temp);\n// Handle potential errors:\n  if (isNaN(temperatureValue)) {\n  temperatureValue = 0; // Or handle the error differently\n}\n\nlet Humidityvalue = parseFloat(msg.payload.Humidity);\n  if (isNaN(Humidityvalue)) {\n  Humidityvalue = 0; // Or handle the error differently\n}\n\n\n// Construct separate messages for each data point\nconst Humiditymessage = {\n  topic: \"Humidity\", // More descriptive topic name\n  payload: Humidityvalue\n};\n\n// Return both messages in an array\nreturn [Humiditymessage];",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 160,
+        "wires": [
+            [
+                "3a4d2e9c5c6d5201"
+            ]
+        ]
+    },
+    {
+        "id": "3a4d2e9c5c6d5201",
+        "type": "ui_chart",
+        "z": "bc27ebb3355b6132",
+        "name": "",
+        "group": "2fc1ce28a58b1ce7",
+        "order": 7,
+        "width": 8,
+        "height": 6,
+        "label": "Temperature/Humidity",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "auto",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 1100,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "336f5989538f7067",
+        "type": "file",
+        "z": "bc27ebb3355b6132",
+        "name": "",
+        "filename": "/home/cuthbert/Desktop/node-red testing folder/file2.csv",
+        "filenameType": "str",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "false",
+        "encoding": "setbymsg",
+        "x": 710,
+        "y": 320,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "181c1021061ae7a9",
+        "type": "json",
+        "z": "bc27ebb3355b6132",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": true,
+        "x": 270,
+        "y": 320,
+        "wires": [
+            [
+                "99861df781a9de67"
+            ]
+        ]
+    },
+    {
+        "id": "99861df781a9de67",
+        "type": "csv",
+        "z": "bc27ebb3355b6132",
+        "name": "",
+        "sep": ",",
+        "hdrin": false,
+        "hdrout": "none",
+        "multi": "one",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": false,
+        "x": 410,
+        "y": 320,
+        "wires": [
+            [
+                "336f5989538f7067"
+            ]
+        ]
+    },
+    {
+        "id": "932c506a8d605a71",
+        "type": "function",
+        "z": "bc27ebb3355b6132",
+        "name": "function 10",
+        "func": "// Access data directly from msg.payload (assuming it's an object)\nlet temperatureValue = parseFloat(msg.payload.temp);\n// Handle potential errors:\nif (isNaN(temperatureValue)) {\n  temperatureValue = 0; // Or handle the error differently\n}\n\nlet dissolvedOxygenValue = parseFloat(msg.payload.DO);\nif (isNaN(dissolvedOxygenValue)) {\n  dissolvedOxygenValue = 0; // Or handle the error differently\n}\n\n// Access data directly from msg.payload (assuming it's an object)\nlet rollingAve = parseFloat(msg.payload.Ave1);\n// Handle potential errors:\nif (isNaN(rollingAve)) {\n  rollingAve = 0; // Or handle the error differently\n}\n\n\n// Construct separate messages for each data point\nconst aveMessage = {\n  topic: \"Average\", // More descriptive topic name\n  payload: rollingAve\n};\n\n// Return both messages in an array\nreturn [aveMessage];\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 410,
+        "y": 200,
+        "wires": [
+            [
+                "fa7bd60a96340f7b"
+            ]
+        ]
+    },
+    {
+        "id": "fa7bd60a96340f7b",
+        "type": "ui_gauge",
+        "z": "bc27ebb3355b6132",
+        "name": "Ave1",
+        "group": "2fc1ce28a58b1ce7",
+        "order": 15,
+        "width": 5,
+        "height": 4,
+        "gtype": "gage",
+        "title": "Rolling Average of previous 120 data points",
+        "label": "units",
+        "format": "{{value}}",
+        "min": "30",
+        "max": "50",
+        "colors": [
+            "#ffc800",
+            "#00e626",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 1130,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "f63115a4ec8876af",
+        "type": "function",
+        "z": "bc27ebb3355b6132",
+        "name": "function 11",
+        "func": "// Access data directly from msg.payload (assuming it's an object)\nlet temperatureValue = parseFloat(msg.payload.temp);\n// Handle potential errors:\nif (isNaN(temperatureValue)) {\n  temperatureValue = 0; // Or handle the error differently\n}\n\nlet dissolvedOxygenValue = parseFloat(msg.payload.DO);\nif (isNaN(dissolvedOxygenValue)) {\n  dissolvedOxygenValue = 0; // Or handle the error differently\n}\n\nlet Ave1 = parseFloat(msg.payload.Ave1);\nif (isNaN(Ave1)) {\n  Ave1 = 0; // Or handle the error differently\n}\n\n// Access data directly from msg.payload (assuming it's an object)\nlet AveWeek = parseFloat(msg.payload.AveWeek);\n// Handle potential errors:\nif (isNaN(AveWeek)) {\n  AveWeek = 0; // Or handle the error differently\n}\n\n\n// Construct separate messages for each data point\nconst aveMessage = {\n  topic: \"Average\", // More descriptive topic name\n  payload: AveWeek\n};\n\n// Return both messages in an array\nreturn [aveMessage];",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 410,
+        "y": 240,
+        "wires": [
+            [
+                "4dcd42d8d254c7ad"
+            ]
+        ]
+    },
+    {
+        "id": "86d85c6908169bc4",
+        "type": "function",
+        "z": "bc27ebb3355b6132",
+        "name": "function 12",
+        "func": "// Access data directly from msg.payload (assuming it's an object)\nlet temperatureValue = parseFloat(msg.payload.temp);\n// Handle potential errors:\nif (isNaN(temperatureValue)) {\n  temperatureValue = 0; // Or handle the error differently\n}\n\nlet DO = parseFloat(msg.payload.DO);\nif (isNaN(DO)) {\n  DO = 0; // Or handle the error differently\n}\n\nlet Ave1 = parseFloat(msg.payload.Ave1);\nif (isNaN(Ave1)) {\n  Ave1 = 0; // Or handle the error differently\n}\n\n// Access data directly from msg.payload (assuming it's an object)\nlet AveWeek = parseFloat(msg.payload.AveWeek);\n// Handle potential errors:\nif (isNaN(AveWeek)) {\n  AveWeek = 0; // Or handle the error differently\n}\n\n// Access data directly from msg.payload (assuming it's an object)\nlet AveMonth = parseFloat(msg.payload.AveMonth);\n// Handle potential errors:\nif (isNaN(AveMonth)) {\n  AveMonth = 0; // Or handle the error differently\n}\n\n\n// Construct separate messages for each data point\nconst aveMessage = {\n  topic: \"Average\", // More descriptive topic name\n  payload: AveMonth\n};\n\n// Return both messages in an array\nreturn [aveMessage];",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 410,
+        "y": 280,
+        "wires": [
+            [
+                "39ce31ba7983b212"
+            ]
+        ]
+    },
+    {
+        "id": "4dcd42d8d254c7ad",
+        "type": "ui_gauge",
+        "z": "bc27ebb3355b6132",
+        "name": "Last Weeks Average",
+        "group": "2fc1ce28a58b1ce7",
+        "order": 2,
+        "width": 5,
+        "height": 4,
+        "gtype": "gage",
+        "title": "Rolling Average of the previous 840 data points",
+        "label": "units",
+        "format": "{{value}}",
+        "min": "30",
+        "max": "50",
+        "colors": [
+            "#ffdd00",
+            "#00ff2a",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 1200,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "39ce31ba7983b212",
+        "type": "ui_gauge",
+        "z": "bc27ebb3355b6132",
+        "name": "Average of Last Month",
+        "group": "2fc1ce28a58b1ce7",
+        "order": 3,
+        "width": 5,
+        "height": 4,
+        "gtype": "gage",
+        "title": "Rolling average of 3360 data points",
+        "label": "units",
+        "format": "{{value}}",
+        "min": "30",
+        "max": "50",
+        "colors": [
+            "#f9aa01",
+            "#00ff04",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 1200,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "ec5c83c31a26be15",
+        "type": "function",
+        "z": "bc27ebb3355b6132",
+        "name": "function 23",
+        "func": "// Access data directly from msg.payload (assuming it's an object)\nlet temperatureValue = parseFloat(msg.payload.temp);\n// Handle potential errors:\nif (isNaN(temperatureValue)) {\n    temperatureValue = 0; // Or handle the error differently\n}\n\nlet Pressure = parseFloat(msg.payload.Pressure);\nif (isNaN(Pressure)) {\n    Pressure = 0; // Or handle the error differently\n}\n\n\n// Construct separate messages for each data point\nconst pressuremessage = {\n    topic: \"Pressure\", // More descriptive topic name\n    payload: Pressure\n};\n\n// Return both messages in an array\nreturn [pressuremessage];\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 410,
+        "y": 80,
+        "wires": [
+            [
+                "b8c85feef0384d56"
+            ]
+        ]
+    },
+    {
+        "id": "dcd547b8fd8d30da",
+        "type": "ui_form",
+        "z": "bc27ebb3355b6132",
+        "name": "Event Log",
+        "label": "Event log",
+        "group": "2fc1ce28a58b1ce7",
+        "order": 14,
+        "width": 0,
+        "height": 0,
+        "options": [
+            {
+                "label": "Name",
+                "value": "Name",
+                "type": "text",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "Email",
+                "value": "Email",
+                "type": "email",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "Date",
+                "value": "Date",
+                "type": "date",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "Time",
+                "value": "Time",
+                "type": "time",
+                "required": false,
+                "rows": null
+            },
+            {
+                "label": "Event",
+                "value": "Event",
+                "type": "multiline",
+                "required": false,
+                "rows": 3
+            }
+        ],
+        "formValue": {
+            "Name": "",
+            "Email": "",
+            "Date": "",
+            "Time": "",
+            "Event": ""
+        },
+        "payload": "",
+        "submit": "submit",
+        "cancel": "cancel",
+        "topic": "topic",
+        "topicType": "msg",
+        "splitLayout": "",
+        "className": "",
+        "x": 400,
+        "y": 460,
+        "wires": [
+            [
+                "4fe87352a3ce7e3d"
+            ]
+        ]
+    },
+    {
+        "id": "4fe87352a3ce7e3d",
+        "type": "csv",
+        "z": "bc27ebb3355b6132",
+        "name": "",
+        "sep": ",",
+        "hdrin": "",
+        "hdrout": "none",
+        "multi": "one",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": "",
+        "x": 570,
+        "y": 460,
+        "wires": [
+            [
+                "d206519cf709c133"
+            ]
+        ]
+    },
+    {
+        "id": "d206519cf709c133",
+        "type": "file",
+        "z": "bc27ebb3355b6132",
+        "name": "",
+        "filename": "/home/cuthbert/Desktop/node-red testing folder/eventlog.csv",
+        "filenameType": "str",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 900,
+        "y": 460,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b79c9817fe82841d",
+        "type": "function",
+        "z": "bc27ebb3355b6132",
+        "name": "function 24",
+        "func": "// Retrieve the message payload\nvar payload = msg.payload;\n\n// Check if the payload is an object and has a property that starts with \"warning\"\nif (typeof payload === 'object' && payload !== null) {\n    for (var key in payload) {\n        if (payload.hasOwnProperty(key) && typeof payload[key] === 'string' && payload[key].startsWith('warning')) {\n            // Create a notification message\n            var notification = {\n                topic: \"Warning Notification\",\n                payload: \"Warning detected: \" + payload[key]\n            };\n            // Send the notification message\n            return [notification, null];\n        }\n    }\n}\n\n// If no warning is found, pass through the original message\nreturn [null, msg];",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 390,
+        "y": 500,
+        "wires": [
+            [
+                "0a805873f635f814"
+            ]
+        ]
+    },
+    {
+        "id": "215294df0ae6612f",
+        "type": "json",
+        "z": "bc27ebb3355b6132",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 290,
+        "y": 380,
+        "wires": [
+            [
+                "b79c9817fe82841d"
+            ]
+        ]
+    },
+    {
+        "id": "0a805873f635f814",
+        "type": "ui_toast",
+        "z": "bc27ebb3355b6132",
+        "position": "dialog",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 1,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "className": "",
+        "topic": "",
+        "name": "",
+        "x": 690,
+        "y": 500,
+        "wires": [
+            [
+                "9f157c38ceb85bc8"
+            ]
+        ]
+    },
+    {
+        "id": "9f157c38ceb85bc8",
+        "type": "ui_text",
+        "z": "bc27ebb3355b6132",
+        "group": "2fc1ce28a58b1ce7",
+        "order": 10,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Latest:",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 930,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "85c0454e8291f5d9",
+        "type": "ui_worldmap",
+        "z": "bc27ebb3355b6132",
+        "group": "2fc1ce28a58b1ce7",
+        "order": 9,
+        "width": 15,
+        "height": 9,
+        "name": "",
+        "lat": "",
+        "lon": "",
+        "zoom": "",
+        "layer": "UKOS",
+        "cluster": "",
+        "maxage": "",
+        "usermenu": "hide",
+        "layers": "hide",
+        "panit": "false",
+        "panlock": "false",
+        "zoomlock": "false",
+        "hiderightclick": "true",
+        "coords": "none",
+        "showgrid": "false",
+        "showruler": "false",
+        "allowFileDrop": "false",
+        "path": "/worldmap",
+        "overlist": "DR,CO,RA,DN",
+        "maplist": "UKOS",
+        "mapname": "",
+        "mapurl": "",
+        "mapopt": "",
+        "mapwms": false,
+        "x": 560,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "c84bf10b4734c579",
+        "type": "inject",
+        "z": "bc27ebb3355b6132",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"name\":\"My Marker\",\"lat\":53.3303,\"lon\":-1.65398}",
+        "payloadType": "json",
+        "x": 390,
+        "y": 560,
+        "wires": [
+            [
+                "85c0454e8291f5d9"
+            ]
+        ]
+    },
+    {
+        "id": "b8c85feef0384d56",
+        "type": "ui_chart",
+        "z": "bc27ebb3355b6132",
+        "name": "Pressure",
+        "group": "2fc1ce28a58b1ce7",
+        "order": 8,
+        "width": 7,
+        "height": 6,
+        "label": "Pressure",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 840,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "178a50aa1245cf00",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "5",
+        "keepalive": "20",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "test_data",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "2fc1ce28a58b1ce7",
+        "type": "ui_group",
+        "name": "River1",
+        "tab": "a58e6387f04561da",
+        "order": 2,
+        "disp": true,
+        "width": "15",
+        "collapse": true,
+        "className": ""
+    },
+    {
+        "id": "a58e6387f04561da",
+        "type": "ui_tab",
+        "name": "River",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]
