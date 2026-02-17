@@ -1,1 +1,4 @@
 Collect array is my program that runs on a raspberry pie (with senseHat attachement), it collect sensor data from your sense hat and create a rolling average with that data then send it via json to another platform too be displayed.
+
+
+https://legitbainesblog.blogspot.com/
