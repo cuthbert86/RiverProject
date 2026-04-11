@@ -1,11 +1,13 @@
 # The River Project Brief Summary of Key Points
 
 This project was ideally suited for me, I have a passion for the environment and it also gave me a great opportunity to learn about some aspects of IOT that I wasn't very knowledgeable about e.g. Mqtt and also work on improving my ability to use Python to collect live sensor data and produce live calcultions with it for my node-red dashboard.
+
 [Raspberry Pi Sense Hat](https://github.com/astro-pi/python-sense-hat)
 
 
 I used node-red to subscribe to the mqtt broker and get display data being published by the raspberry pi.  I added an event logging feature that will allow users to
 input things via the data dashboard that they have seen in the field and help us understand the different data that the sensors are detecting from the environment.
+
 [Node-red](https://nodered.org/)
 
 
